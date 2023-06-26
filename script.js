@@ -1,25 +1,25 @@
 var token = '90933230|-31949280281796281|90950773';
-var dbname = 'EMP-DB';
-var relation = "EmpData";
+var dbname = 'SCHOOL-DB';
+var relation = "STUDENT-TABLE";
 var baseUrl = "http://api.login2explore.com:5577";
 function resetForm() {
-    $("#id").val('')
+    $("#roll").val('')
     $("#name").val('');
-    $("#salary").val('');
-    $("#hra").val('');
-    $("#da").val('');
-    $("#deduct").val('');
+    $("#cls").val('');
+    $("#dob").val('');
+    $("#addr").val('');
+    $("#doe").val('');
 }
 
 function disableAll() {
     resetForm();
-    $("#id").prop("disabled", false);
-    $("#id").focus();
+    $("#roll").prop("disabled", false);
+    $("#roll").focus();
     $("#name").prop("disabled", true);
-    $("#salary").prop("disabled", true);
-    $("#hra").prop("disabled", true);
-    $("#da").prop("disabled", true);
-    $("#deduct").prop("disabled", true);
+    $("#cls").prop("disabled", true);
+    $("#dob").prop("disabled", true);
+    $("#addr").prop("disabled", true);
+    $("#doe").prop("disabled", true);
     $("#save").prop("disabled", true);
     $("#update").prop("disabled", true);
     $("#reset").prop("disabled", true);
@@ -75,10 +75,10 @@ function createGET_BY_KEYRequest(token, dbname, relationName, jsonObjStr, create
     return value1;
 }
 
-function findId(ele) {
-    var id = ele.value;
+function findRoll(ele) {
+    var roll = ele.value;
     var obj = {
-        id: id
+        Roll_No: roll
     };
     var jsnobj = JSON.stringify(obj);
     var request = createGET_BY_KEYRequest(token, dbname, relation, jsnobj);
@@ -88,19 +88,19 @@ function findId(ele) {
     if (res.status == 400) {
         $("#name").prop("disabled", false);
         $("#name").focus();
-        $("#salary").prop("disabled", false);
-        $("#hra").prop("disabled", false);
-        $("#da").prop("disabled", false);
-        $("#deduct").prop("disabled", false);
+        $("#cls").prop("disabled", false);
+        $("#dob").prop("disabled", false);
+        $("#addr").prop("disabled", false);
+        $("#doe").prop("disabled", false);
         $("#save").prop("disabled", false);
         $("#reset").prop("disabled", false);
     } else {
         $("#name").prop("disabled", false);
-        $("#id").prop("disabled", true);
-        $("#salary").prop("disabled", false);
-        $("#hra").prop("disabled", false);
-        $("#da").prop("disabled", false);
-        $("#deduct").prop("disabled", false);
+        $("#roll").prop("disabled", true);
+        $("#cls").prop("disabled", false);
+        $("#dob").prop("disabled", false);
+        $("#addr").prop("disabled", false);
+        $("#doe").prop("disabled", false);
         $("#reset").prop("disabled", false);
         $("#save").prop("disabled", true);
         $("#update").prop("disabled", false);
@@ -108,10 +108,10 @@ function findId(ele) {
         var data = JSON.parse(res.data).record;
         // console.log(data);
         $("#name").val(data.Full_Name);
-        $("#salary").val(data.salary);
-        $("#hra").val(data.hra);
-        $("#da").val(data.da);
-        $("#deduct").val(data.deduct);
+        $("#cls").val(data.Class);
+        $("#dob").val(data.Birth_Date);
+        $("#addr").val(data.Address);
+        $("#doe").val(data.Enrollment_Date);
     }
 }
 function createPUTRequest(connToken, jsonObj, dbName, relName) {
@@ -132,39 +132,39 @@ function createPUTRequest(connToken, jsonObj, dbName, relName) {
 }
 function saveData() {
     $("#ajax").html("wait");
-    var id = $("#id").val();
+    var roll = $("#roll").val();
     var name = $("#name").val()
-    var salary = $("#salry").val();
-    var hra = $("#hra").val();
-    var da = $("#da").val();
-    var deduct = $("#deduct").val();
-    if(id==''){
-        $("#id").focus();
+    var cls = $("#cls").val();
+    var dob = $("#dob").val();
+    var addr = $("#addr").val();
+    var doe = $("#doe").val();
+    if(roll==''){
+        $("#roll").focus();
         return;
     }
     if(name==''){
         $("#name").focus();
         return;
-    }if(salary==''){
+    }if(cls==''){
         $("#cls").focus();
         return;
-    }if(hra==''){
+    }if(dob==''){
         $("#dob").focus();
         return;
-    }if(da==''){
+    }if(addr==''){
         $("#addr").focus();
         return;
-    }if(deduct==''){
+    }if(doe==''){
         $("#doe").focus();
         return;
     }
     var obj = {
-        id: id,
+        Roll_No: roll,
         Full_Name: name,
-        Salary: salary,
-        hra: hra,
-        Da: da,
-        Deduct: deduct
+        Class: cls,
+        Birth_Date: dob,
+        Address: addr,
+        Enrollment_Date: doe
     };
     var jsonobj = JSON.stringify(obj);
     var req = createPUTRequest(token, jsonobj, dbname, relation);
@@ -199,35 +199,35 @@ function createSETRequest(token, jsonStr, dbName, relName, type, primaryKey, uni
 }
 
 function updateData(){
-    var id = $("#id").val();
+    var roll = $("#roll").val();
     var name = $("#name").val()
-    var salary = $("#salary").val();
-    var hra = $("#hra").val();
-    var da = $("#da").val();
-    var deduct = $("#deduct").val();
+    var cls = $("#cls").val();
+    var dob = $("#dob").val();
+    var addr = $("#addr").val();
+    var doe = $("#doe").val();
     if(name==''){
         $("#name").focus();
         return;
-    }if(salary==''){
+    }if(cls==''){
         $("#cls").focus();
         return;
-    }if(hra==''){
+    }if(dob==''){
         $("#dob").focus();
         return;
-    }if(da==''){
+    }if(addr==''){
         $("#addr").focus();
         return;
-    }if(deduct==''){
+    }if(doe==''){
         $("#doe").focus();
         return;
     }
     var obj = {
-        id: id,
+        Roll_No: roll,
         Full_Name: name,
-        Salary: salary,
-        hra: hra,
-        Da: da,
-        deduct: deduct
+        Class: cls,
+        Birth_Date: dob,
+        Address: addr,
+        Enrollment_Date: doe
     };
     var jsonobj = JSON.stringify(obj);
     var req=createSETRequest(token,jsonobj,dbname,relation,'UPDATE','Roll_No');
